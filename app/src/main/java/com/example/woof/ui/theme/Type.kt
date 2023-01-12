@@ -17,27 +17,58 @@ package com.example.woof.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.example.woof.R
+
+val AbrilFatface = FontFamily(Font(R.font.abril_fatface_regular))
+val SofiaSansItalic = FontFamily(Font(R.font.sofisans_italic_variablefont_weight))
+val SofiaSansNormal = FontFamily(Font(R.font.sofisans_variablefont_weight))
 
 // Set of Material typography styles to start with
 val Typography = Typography(
     body1 = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = SofiaSansNormal,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp
-    )
-    /* Other default text styles to override
-    button = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.W500,
-        fontSize = 14.sp
     ),
-    caption = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 12.sp
+    h1 = TextStyle(
+        fontFamily = AbrilFatface,
+        fontSize = 30.sp,
+        fontWeight = FontWeight.Normal
+    ),
+    h2 = TextStyle(
+        fontFamily = SofiaSansItalic,
+        fontSize = 20.sp,
+        fontWeight = FontWeight.Bold
+    ),
+    h3 = TextStyle(
+        fontFamily = SofiaSansItalic,
+        fontSize = 14.sp,
+        fontWeight = FontWeight.Bold
     )
-    */
 )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
