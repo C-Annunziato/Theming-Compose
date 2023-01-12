@@ -70,8 +70,7 @@ fun WoofTopBar(modifier: Modifier = Modifier) {
                 .padding(8.dp)
         )
         Text(
-            text = stringResource(id = R.string.app_name),
-            style = MaterialTheme.typography.h1
+            text = stringResource(id = R.string.app_name), style = MaterialTheme.typography.h1
         )
     }
 }
@@ -93,21 +92,21 @@ fun WoofApp() {
 
 @Composable
 fun DogItem(dog: Dog, modifier: Modifier = Modifier, expanded: Boolean, onExpanded: () -> Unit) {
-
     Card(
-        modifier = Modifier
+        modifier = modifier
             .padding(8.dp)
-            .fillMaxWidth(),
-        elevation = 4.dp
+            .fillMaxWidth(), elevation = 4.dp
     ) {
-        Row (){
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
             DogIcon(dog.imageResourceId)
-            DogInformation(dog.name, dog.age)
-            Spacer(Modifier.weight(1f))
-            Box(modifier = Modifier.align(Alignment.CenterVertically), ) {
-                DogIconButton(expanded = expanded, onClick = onExpanded)
-            }
+            DogInformation(dog.name, dog.age, modifier = Modifier.weight(1f))
+            DogIconButton(expanded = expanded, onClick = onExpanded)
         }
+
     }
 }
 
@@ -117,25 +116,18 @@ fun DogIcon(@DrawableRes dogIcon: Int, modifier: Modifier = Modifier) {
     Image(
         modifier = modifier
             .size(64.dp)
-            .clip(RoundedCornerShape(50))
-            .padding(8.dp),
+            .clip(RoundedCornerShape(50)),
         contentScale = ContentScale.Crop,
         painter = painterResource(dogIcon),
-        /*
-         * Content Description is not needed here - image is decorative, and setting a null content
-         * description allows accessibility services to skip this element during navigation.
-         */
         contentDescription = null
     )
 }
 
 @Composable
 fun DogInformation(@StringRes dogName: Int, dogAge: Int, modifier: Modifier = Modifier) {
-    Column {
+    Column(modifier = modifier) {
         Text(
-            text = stringResource(dogName),
-            modifier = modifier.padding(top = 8.dp),
-            style = MaterialTheme.typography.h2
+            text = stringResource(dogName), style = MaterialTheme.typography.h2
         )
         Text(
             text = stringResource(R.string.years_old, dogAge),
@@ -155,18 +147,16 @@ fun WoofPreview() {
 
 @Composable
 fun DogIconButton(
-    expanded: Boolean,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    expanded: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier
 ) {
-        IconButton(onClick = onClick) {
-                Icon(
-                    imageVector = Icons.Filled.ExpandMore,
-                    contentDescription = stringResource(id = R.string.expand_button_content_description),
-                    tint = MaterialTheme.colors.secondary,
-                )
+    IconButton(onClick = onClick) {
+        Icon(
+            imageVector = Icons.Filled.ExpandMore,
+            contentDescription = stringResource(id = R.string.expand_button_content_description),
+            tint = MaterialTheme.colors.secondary,
+        )
 
-            }
+    }
 }
 
 @Preview
