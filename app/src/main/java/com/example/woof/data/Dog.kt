@@ -17,6 +17,10 @@ package com.example.woof.data
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import com.example.woof.R
 
 /**
@@ -26,17 +30,20 @@ data class Dog(
     @DrawableRes val imageResourceId: Int,
     @StringRes val name: Int,
     val age: Int,
-    @StringRes val hobbies: Int
-)
+    @StringRes val hobbies: Int,
+    val id: Int
+) {
+    var expanded: Boolean by mutableStateOf(false)
+}
 
 val dogs = listOf(
-    Dog(R.drawable.koda, R.string.dog_name_1, 2, R.string.dog_description_1),
-    Dog(R.drawable.lola, R.string.dog_name_2, 16, R.string.dog_description_2),
-    Dog(R.drawable.frankie, R.string.dog_name_3, 2, R.string.dog_description_3),
-    Dog(R.drawable.nox, R.string.dog_name_4, 8, R.string.dog_description_4),
-    Dog(R.drawable.faye, R.string.dog_name_5, 8, R.string.dog_description_5),
-    Dog(R.drawable.bella, R.string.dog_name_6, 14, R.string.dog_description_6),
-    Dog(R.drawable.moana, R.string.dog_name_7, 2, R.string.dog_description_7),
-    Dog(R.drawable.tzeitel, R.string.dog_name_8, 7, R.string.dog_description_8),
-    Dog(R.drawable.leroy, R.string.dog_name_9, 4, R.string.dog_description_9)
+    Dog(R.drawable.koda, R.string.dog_name_1, 2, R.string.dog_description_1, 0),
+    Dog(R.drawable.lola, R.string.dog_name_2, 16, R.string.dog_description_2, 1),
+    Dog(R.drawable.frankie, R.string.dog_name_3, 2, R.string.dog_description_3, 2),
+    Dog(R.drawable.nox, R.string.dog_name_4, 8, R.string.dog_description_4, 3),
+    Dog(R.drawable.faye, R.string.dog_name_5, 8, R.string.dog_description_5, 4),
+    Dog(R.drawable.bella, R.string.dog_name_6, 14, R.string.dog_description_6, 5),
+    Dog(R.drawable.moana, R.string.dog_name_7, 2, R.string.dog_description_7, 6),
+    Dog(R.drawable.tzeitel, R.string.dog_name_8, 7, R.string.dog_description_8, 7),
+    Dog(R.drawable.leroy, R.string.dog_name_9, 4, R.string.dog_description_9, 8)
 )

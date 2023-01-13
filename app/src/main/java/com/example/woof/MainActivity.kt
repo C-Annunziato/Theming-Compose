@@ -16,6 +16,7 @@
 package com.example.woof
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.DrawableRes
@@ -37,15 +38,17 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.woof.data.Dog
 import com.example.woof.data.dogs
 import com.example.woof.ui.theme.WoofTheme
+
+
+const val TAG = "main"
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,14 +85,18 @@ fun WoofTopBar(modifier: Modifier = Modifier) {
 @Composable
 fun WoofApp() {
 
-    var expanded by remember { mutableStateOf(false) }
-
     Scaffold(topBar = { WoofTopBar() }) {
 
         LazyColumn(modifier = Modifier.background(MaterialTheme.colors.background)) {
-            items(dogs) {
-                DogItem(dog = it, expanded = expanded, onExpanded = { expanded = !expanded })
+            items(items = dogs, key = { dog -> dog.id }
+            ) { dog ->
+                DogItem(dog = dog, expanded = dog.expanded, onExpanded = {
+                    Log.i(TAG, "index num is : ${dogs.indexOf(dog)}")
+                    Log.i(TAG, "dog id is : ${dog.id}")
+                        dog.expanded = !dog.expanded
+                })
             }
+
         }
     }
 }
@@ -118,6 +125,7 @@ fun DogItem(dog: Dog, modifier: Modifier = Modifier, expanded: Boolean, onExpand
                 DogInformation(dog.name, dog.age, modifier = Modifier.weight(1f))
                 DogIconButton(expanded = expanded, onClick = onExpanded)
             }
+            Log.i(TAG, "$expanded")
             if (expanded) {
                 DogHobby(
                     dog.hobbies
@@ -156,6 +164,7 @@ fun DogInformation(@StringRes dogName: Int, dogAge: Int, modifier: Modifier = Mo
 
 @Composable
 fun DogHobby(@StringRes dogHobby: Int, modifier: Modifier = Modifier) {
+
     Column(
         modifier = modifier.padding(
             start = 16.dp, top = 8.dp, bottom = 16.dp, end = 16.dp
@@ -183,3 +192,9 @@ fun DogIconButton(
         )
     }
 }
+
+fun checkItemIsId(dog: Dog, list: List<Dog>) {
+    list.find { (it.id == dog.id) }?.let {}
+}
+
+
