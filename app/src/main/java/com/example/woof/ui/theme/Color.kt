@@ -23,7 +23,7 @@ val White = Color(0xFFFFFFFF)
 val Grey100 = Color(0xFFF1F3F4)
 val Cyan900 = Color(0xFF007B83)
 val Cyan700 = Color(0xFF129EAF)
-
+val ExpandedColor = Color(0xFF7DB3B9)
 
 //Light Theme
 val Grey50 = Color(0xFFF8F9FA)
