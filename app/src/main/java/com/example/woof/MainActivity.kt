@@ -20,6 +20,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -28,11 +31,13 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -96,7 +101,14 @@ fun DogItem(dog: Dog, modifier: Modifier = Modifier, expanded: Boolean, onExpand
             .padding(8.dp)
             .fillMaxWidth(), elevation = 4.dp
     ) {
-        Column() {
+        Column(
+            modifier = Modifier.animateContentSize(
+                animationSpec = spring(
+                    dampingRatio = Spring.DampingRatioMediumBouncy,
+                    stiffness = Spring.StiffnessMedium
+                )
+            )
+        ) {
             Row(
                 verticalAlignment = CenterVertically,
                 modifier = Modifier.padding(8.dp),
@@ -104,32 +116,15 @@ fun DogItem(dog: Dog, modifier: Modifier = Modifier, expanded: Boolean, onExpand
             ) {
                 DogIcon(dog.imageResourceId)
                 DogInformation(dog.name, dog.age, modifier = Modifier.weight(1f))
-                DogIconButton(onClick = onExpanded)
+                DogIconButton(expanded = expanded, onClick = onExpanded)
             }
             if (expanded) {
-                DogHobby(dog.hobbies)
+                DogHobby(
+                    dog.hobbies
+                )
             }
         }
     }
-}
-
-@Composable
-fun DogHobby(@StringRes dogHobby: Int, modifier: Modifier = Modifier) {
-    Column(
-        modifier = modifier.padding(
-            start = 16.dp, top = 8.dp, bottom = 16.dp, end = 16.dp
-        )
-    ) {
-        Text(
-            text = stringResource(id = R.string.about),
-            style = MaterialTheme.typography.h3
-        )
-        Text(
-            text = "$dogHobby",
-            style = MaterialTheme.typography.body1
-        )
-    }
-
 }
 
 
@@ -158,33 +153,33 @@ fun DogInformation(@StringRes dogName: Int, dogAge: Int, modifier: Modifier = Mo
     }
 }
 
-@Preview
+
 @Composable
-fun WoofPreview() {
-    WoofTheme(darkTheme = false) {
-        WoofApp()
+fun DogHobby(@StringRes dogHobby: Int, modifier: Modifier = Modifier) {
+    Column(
+        modifier = modifier.padding(
+            start = 16.dp, top = 8.dp, bottom = 16.dp, end = 16.dp
+        )
+    ) {
+        Text(
+            text = stringResource(id = R.string.about), style = MaterialTheme.typography.h3
+        )
+        Text(
+            text = stringResource(id = dogHobby), style = MaterialTheme.typography.body1
+        )
     }
 }
-
 
 @Composable
 fun DogIconButton(
-    onClick: () -> Unit, modifier: Modifier = Modifier
+    expanded: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier
 ) {
+
     IconButton(onClick = onClick, modifier = modifier) {
         Icon(
-            imageVector = Icons.Filled.ExpandMore,
+            imageVector = if (expanded) Icons.Filled.ExpandMore else Icons.Filled.ExpandLess,
             contentDescription = stringResource(id = R.string.expand_button_content_description),
             tint = MaterialTheme.colors.secondary,
         )
-
-    }
-}
-
-@Preview
-@Composable
-fun DarkThemePreview() {
-    WoofTheme(darkTheme = true) {
-        WoofApp()
     }
 }
